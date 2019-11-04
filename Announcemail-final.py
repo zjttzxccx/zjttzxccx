@@ -19,7 +19,10 @@ def sent_email(mail_body):
     smtpServer = 'smtp.zju.edu.cn'
     username = '0010467'
     password = '47530471shine'
-    mail_title = (datetime.date.today()-datetime.timedelta(days=1)).__format__('%Y-%m-%d')+'最新通知'
+    if datetime.date.today().isoweekday()==1:
+    	mail_title=(datetime.date.today()-datetime.timedelta(days=3)).__format__('%Y-%m-%d')+'至'+(datetime.date.today()-datetime.timedelta(days=1)).__format__('%Y-%m-%d')+'（周五至周日）最新通知'
+    else:
+    	mail_title = (datetime.date.today()-datetime.timedelta(days=1)).__format__('%Y-%m-%d')+'最新通知'
     mail_body = mail_body
 
     message = MIMEText(mail_body, 'plain', 'utf-8')
@@ -56,13 +59,20 @@ def get_content_bksy():
 	#links = soup.find_all('a',target="_blank")
 	main_url = 'http://bksy.zju.edu.cn/office/'
 	content_list = []
+	today_time=datetime.date.today()
 	for alink in alinks:
 		art_url=main_url+alink.a.get('href')
 		content=alink.a.get('title')
 		art_time=alink.find('span',class_="art-date").text
-		current_time=(datetime.date.today()-datetime.timedelta(days=1)).__format__('%Y-%m-%d')
-		if art_time==current_time:
-			content_list.append('本科生院通知： '+content+' 链接地址:'+art_url)
+		if today_time.isoweekday()==1:
+			for i in range(1,4):
+				current_time=(today_time-datetime.timedelta(days=i)).__format__('%Y-%m-%d')
+				if art_time==current_time:
+					content_list.append('本科生院通知： '+content+' 链接地址:'+art_url+' 时间：'+art_time)
+		else:
+			current_time=(today_time-datetime.timedelta(days=1)).__format__('%Y-%m-%d')
+			if art_time==current_time:
+				content_list.append('本科生院通知： '+content+' 链接地址:'+art_url)
 	return content_list
 
 def get_content_grs():
@@ -83,6 +93,7 @@ def get_content_grs():
 	#links = soup.find_all('a',target="_blank")
 	main_url = 'http://grs.zju.edu.cn/'
 	content_list = []
+	today_time=datetime.date.today()
 	for alink in alinks:
 		aurl=alink.find('a',target="_blank")
 		#print(aurl)
@@ -92,9 +103,15 @@ def get_content_grs():
 		#print(content)
 		art_time=alink.find('span',class_="art-date").text
 		#print(art_time)
-		current_time=(datetime.date.today()-datetime.timedelta(days=1)).__format__('%Y-%m-%d')
-		if art_time==current_time:
-			content_list.append('研究生院通知： '+content+' 链接地址:'+art_url)
+		if today_time.isoweekday()==1:
+			for i in range(1,4):
+				current_time=(today_time-datetime.timedelta(days=i)).__format__('%Y-%m-%d')
+				if art_time==current_time:
+					content_list.append('研究生院通知： '+content+' 链接地址:'+art_url+' 时间：'+art_time)
+		else:
+			current_time=(today_time-datetime.timedelta(days=1)).__format__('%Y-%m-%d')
+			if art_time==current_time:
+				content_list.append('研究生院通知： '+content+' 链接地址:'+art_url)
 	return content_list
 
 if __name__ == '__main__':
