@@ -1,5 +1,7 @@
 # 浙江大学校内网站通知爬取及邮件提醒
-
+效果图
+------
+![](https://github.com/zjttzxccx/zjttzxccx/raw/master/Image/sample.png)
 
 技术实现
 -------
