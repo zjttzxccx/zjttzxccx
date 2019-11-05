@@ -7,9 +7,9 @@
 
 技术栈
 -------
-*request
-*BS4
-*smtplib
+    * request
+    * BS4
+    * smtplib
 
 下载及运行
 ------
