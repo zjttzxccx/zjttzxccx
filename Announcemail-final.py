@@ -140,6 +140,9 @@ if __name__ == '__main__':
 	content_list_1=get_content_bksy()
 	content_list_2=get_content_grs()
 	content_list=content_list_1+content_list_2
+	f=open("./log/logfile.txt",'a',encoding='utf-8')
+	f.write('\n'.join(content_list)) #list输出到txt的一种方法，也可以用for...in...的语句
+	f.close()
 	print(content_list)
 	mail_content=''
 	if len(content_list)==0:
